@@ -1,0 +1,18 @@
+/* BINGO GAME */
+
+.number-box {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 3px;
+  border-radius: 8px;
+  font-weight: bold;
+  background-color: #f8f9fa;
+  transition: background-color 0.3s;
+}
+.number-box.called {
+  background-color: #0d6efd;
+  color: white;
+}
