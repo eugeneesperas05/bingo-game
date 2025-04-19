@@ -49,6 +49,70 @@ function generateBingoNumber() {
   if (calledBox) {
     calledBox.classList.add("called");
   }
+
+  // audio to play
+
+  const audioBingoLetters = [
+    new Audio("recordings/letters/B.mp3"),
+    new Audio("recordings/letters/I.mp3"),
+    new Audio("recordings/letters/N.mp3"),
+    new Audio("recordings/letters/G.mp3"),
+    new Audio("recordings/letters/O.mp3"),
+  ];
+
+  const audioBingoTens = [
+    new Audio("recordings/dinumbers/Pilado.mp3"),
+    new Audio("recordings/dinumbers/Diuno.mp3"),
+    new Audio("recordings/dinumbers/Didos.mp3"),
+    new Audio("recordings/dinumbers/Ditres.mp3"),
+    new Audio("recordings/dinumbers/Diquatro.mp3"),
+    new Audio("recordings/dinumbers/Disingko.mp3"),
+    new Audio("recordings/dinumbers/Diseyes.mp3"),
+    new Audio("recordings/dinumbers/Disyete.mp3"),
+  ];
+
+  const audioBingoOnes = [
+    new Audio("recordings/numbers/Uno.mp3"),
+    new Audio("recordings/numbers/Dos.mp3"),
+    new Audio("recordings/numbers/Tres.mp3"),
+    new Audio("recordings/numbers/Quatro.mp3"),
+    new Audio("recordings/numbers/Singko.mp3"),
+    new Audio("recordings/numbers/Seyes.mp3"),
+    new Audio("recordings/numbers/Syete.mp3"),
+    new Audio("recordings/numbers/Otcho.mp3"),
+    new Audio("recordings/numbers/Nuebe.mp3"),
+    new Audio("recordings/numbers/Sarado.mp3"),
+  ];
+
+  function playNumberAudio(num) {
+    const letterIndex = Math.floor((num - 1) / 15); // 0 = B, 4 = O
+    const tens = Math.floor(num / 10);
+    const ones = num % 10;
+
+    const soundsToPlay = [];
+
+    // Add "B", "I", "N", "G", or "O"
+    soundsToPlay.push(audioBingoLetters[letterIndex]);
+
+    // Add tens place audio (e.g., "seventy")
+    if (tens > 1) soundsToPlay.push(audioBingoTens[tens]);
+
+    // Add ones place audio (e.g., "two")
+    if (ones > 0) soundsToPlay.push(audioBingoOnes[ones]);
+
+    // Sequentially play each sound with a small delay
+    playSequentially(soundsToPlay);
+  }
+
+  playNumberAudio(num);
+}
+
+function playSequentially(audioArray, index = 0) {
+  if (index >= audioArray.length) return;
+  const sound = audioArray[index];
+  sound.currentTime = 0;
+  sound.play();
+  sound.onended = () => playSequentially(audioArray, index + 1);
 }
 
 function resetBingo() {
