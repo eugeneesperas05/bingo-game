@@ -1,5 +1,28 @@
 // BINGO GAME
 
+// shaking sound effets
+let sound = new Audio("recordings/shake/Shake.mp3");
+let isPlaying = false;
+
+function toggleSound() {
+  if (!isPlaying) {
+    sound.play();
+    document.getElementById("soundBtn").textContent = "Shaking...";
+    isPlaying = true;
+  } else {
+    sound.pause();
+    sound.currentTime = 0; // Optional: reset to start
+    document.getElementById("soundBtn").textContent = "Pause";
+    isPlaying = false;
+  }
+}
+
+// Reset state when sound ends
+sound.onended = () => {
+  isPlaying = false;
+  document.getElementById("soundBtn").textContent = "Play Sound";
+};
+
 const usedNumbers = new Set();
 
 // Create the board dynamically
