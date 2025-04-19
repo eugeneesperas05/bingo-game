@@ -1,4 +1,21 @@
 /* BINGO GAME */
+* {
+  /* border: 1px solid #000; */
+}
+
+#letters > .col {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 3px;
+  border: 1px solid #0d6efd;
+  border-radius: 8px;
+  font-weight: bold;
+  background-color: #f8f9fa;
+  transition: background-color 0.3s;
+}
 
 .number-box {
   width: 50px;
@@ -7,6 +24,7 @@
   align-items: center;
   justify-content: center;
   margin: 3px;
+  border: 1px solid #0d6efd;
   border-radius: 8px;
   font-weight: bold;
   background-color: #f8f9fa;

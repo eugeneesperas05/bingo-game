@@ -9,12 +9,12 @@ function createBoard() {
 
   for (let i = 0; i < 15; i++) {
     const row = document.createElement("div");
-    row.className = "row justify-content-center";
+    row.className = "row d-flex justify-content-center align-items-center";
 
     for (let j = 0; j < 5; j++) {
       const num = i + 1 + j * 15;
       const col = document.createElement("div");
-      col.className = "col";
+      col.className = "col d-flex justify-content-center align-items-center";
 
       const box = document.createElement("div");
       box.className = "number-box";
