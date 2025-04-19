@@ -84,23 +84,40 @@ function generateBingoNumber() {
     new Audio("recordings/numbers/Sarado.mp3"),
   ];
 
+  const soundsToPlay = [];
+
   function playNumberAudio(num) {
     const letterIndex = Math.floor((num - 1) / 15); // 0 = B, 4 = O
     const tens = Math.floor(num / 10);
     const ones = num % 10;
 
-    const soundsToPlay = [];
+    if (num >= 1 && num <= 9) {
+      //  Case 1: Numbers 1–9
+      soundsToPlay.push(audioBingoLetters[letterIndex]); // e.g., "B.mp3"
+      soundsToPlay.push(audioBingoTens[0]); // "Pilado.mp3"
+      soundsToPlay.push(audioBingoOnes[num - 1]); // 1–9
+    } else if (num >= 10 && num <= 19) {
+      //  Case 2: Numbers 10–19
+      soundsToPlay.push(audioBingoLetters[letterIndex]); // e.g., "I.mp3"
+      soundsToPlay.push(audioBingoTens[1]); // "Diuno.mp3"
+      if (ones > 0) {
+        soundsToPlay.push(audioBingoOnes[ones - 1]); // 1–9
+      } else {
+        soundsToPlay.push(audioBingoOnes[9]); // "Sarado" for 10
+      }
+    } else {
+      //  Case 3: Numbers 20–75
+      soundsToPlay.push(audioBingoLetters[letterIndex]); // e.g., "N.mp3"
+      if (tens > 1) {
+        soundsToPlay.push(audioBingoTens[tens]); // Didos, Diquatro, etc.
+      }
+      if (ones === 0) {
+        soundsToPlay.push(audioBingoOnes[9]); // "Sarado"
+      } else {
+        soundsToPlay.push(audioBingoOnes[ones - 1]); // 1–9
+      }
+    }
 
-    // Add "B", "I", "N", "G", or "O"
-    soundsToPlay.push(audioBingoLetters[letterIndex]);
-
-    // Add tens place audio (e.g., "seventy")
-    if (tens > 1) soundsToPlay.push(audioBingoTens[tens]);
-
-    // Add ones place audio (e.g., "two")
-    if (ones > 0) soundsToPlay.push(audioBingoOnes[ones]);
-
-    // Sequentially play each sound with a small delay
     playSequentially(soundsToPlay);
   }
 
@@ -113,6 +130,19 @@ function playSequentially(audioArray, index = 0) {
   sound.currentTime = 0;
   sound.play();
   sound.onended = () => playSequentially(audioArray, index + 1);
+}
+
+// for the naygan
+function naygan() {
+  const button = document.querySelector('button[onclick="naygan()"]');
+  button.disabled = true;
+
+  const nayganAudio = new Audio("recordings/naygan/Naygan.mp3");
+  nayganAudio.onended = () => {
+    generateBingoNumber();
+    button.disabled = false;
+  };
+  nayganAudio.play();
 }
 
 function resetBingo() {
